@@ -8,6 +8,7 @@
 </head>
 <body>
 
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -585,6 +586,8 @@ const portfolioData = {
     { name: 'Data Modeling', cat: 'Scripting & Analytics', level: 5, note: 'Dimensional design, grain decisions, slowly changing dimensions.' }
   ],
   projectCategories: ['Power BI', 'Power Apps', 'Excel', 'Python', 'Automation', 'SQL'],
+  // Display order of the project cards (3 per row on desktop). Projects not listed follow in their original order.
+  projectOrder: ['lgs-segments', 'ndc-segments', 'incentive-dashboard', 'wbr-market-performance', 'call-log', 'daily-midt', 'internet-segments'],
   projects: [
     {
       id: 'lgs-segments', title: 'LGS Segments Dashboard', cat: 'Power BI', cover: LGS_IMG,
@@ -1226,7 +1229,8 @@ function renderProjects() {
     </button>`;
   // small text separators: one per category, then that category's projects
   $('#projectGrid').innerHTML = portfolioData.projectCategories.map((c) => {
-    const items = list.filter((p) => p.cat === c);
+    const rank = (p) => { const i = (portfolioData.projectOrder || []).indexOf(p.id); return i < 0 ? 999 : i; };
+    const items = list.filter((p) => p.cat === c).sort((x, y) => rank(x) - rank(y));
     return items.length ? `<div class="sep-label" role="heading" aria-level="3"><span>${esc(c)}</span><i></i></div>${items.map(card).join('')}` : '';
   }).join('');
 }
