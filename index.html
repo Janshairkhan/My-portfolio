@@ -1543,6 +1543,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
 (function heroVideo() {
   const v = $('#bgVideo'), btn = $('#bgToggle'), sbtn = $('#bgSound'), bg = $('#heroBg'), hero = $('.hero');
   if (!v || !bg || !hero) return;
+  const SOUND_LEVEL = 0.7; // hero video volume when sound is on (1 = full)
   let inHero = true, activated = false, soundWanted = store.get('bgSound') !== '0', ramp = 0;
   // band height = from the page top to the end of the hero
   const size = () => { bg.style.height = Math.round(hero.getBoundingClientRect().bottom + window.scrollY) + 'px'; };
@@ -1559,7 +1560,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
   const saveData = !!(navigator.connection && navigator.connection.saveData);
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   let userPaused = store.get('bgPaused') === '1';
-  v.muted = true; v.defaultMuted = true; v.loop = true; v.volume = 1;
+  v.muted = true; v.defaultMuted = true; v.loop = true; v.volume = 0;
   // Sound: on while the hero is on screen, faded out when the visitor scrolls below it.
   // Browsers only allow sound after the visitor has clicked, tapped or pressed a key on the page.
   function soundLabel() {
@@ -1571,7 +1572,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     const want = soundWanted && activated && inHero && !v.paused;
     clearInterval(ramp);
     if (want) v.muted = false;
-    const from = v.muted ? 0 : v.volume, target = want ? 1 : 0, t0 = performance.now();
+    const from = v.muted ? 0 : v.volume, target = want ? SOUND_LEVEL : 0, t0 = performance.now();
     if (from === target) { if (!want) v.muted = true; soundLabel(); return; }
     ramp = setInterval(() => {
       const k = Math.min(1, (performance.now() - t0) / 500);
