@@ -7,7 +7,7 @@
 <meta name="description" content="Portfolio of Jansher Khan: Power BI dashboards, Power Apps, automation and data analysis.">
 </head>
 <body>
-
+<meta charset="utf-8">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -169,6 +169,16 @@ section { padding-block: 56px 8px; scroll-margin-top: 72px; }
 .sec-head p { color: var(--muted); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+/* tool icons: generic colour-coded glyphs (not official logos) */
+.ti { width: 15px; height: 15px; flex: none; vertical-align: -3px; margin-right: 6px; }
+.chip, .pill, .code-tab small, .code-bar span { display: inline-flex; align-items: center; }
+.chip .ti, .pill .ti, .code-tab small .ti, .code-bar span .ti { margin-right: 6px; }
+.pill .ti { width: 13px; height: 13px; margin-right: 5px; vertical-align: 0; }
+.skill-top h3 { display: flex; align-items: center; }
+.skill-top h3 .ti { width: 20px; height: 20px; margin-right: 8px; }
+.flow span.node { display: inline-flex; align-items: center; }
+.flow span.node .ti { width: 14px; height: 14px; margin-right: 6px; vertical-align: 0; }
+
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 500; color: var(--muted); }
 .chip:hover { border-color: var(--accent); color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
@@ -1200,7 +1210,7 @@ function renderSkills() {
   const list = portfolioData.skills.filter((s) => skillState.cat === 'All' || s.cat === skillState.cat);
   $('#skillGrid').innerHTML = list.map((s) => `
     <div class="skill">
-      <div class="skill-top"><h3>${esc(s.name)}</h3></div>
+      <div class="skill-top"><h3>${ic(s.name)}${esc(s.name)}</h3></div>
       <small>${esc(s.cat)}</small>
       <div class="meter" aria-label="${esc(levels[s.level])} level">${[1, 2, 3, 4, 5].map((n) => `<i class="${n <= s.level ? 'on' : ''}"></i>`).join('')}<span>${levels[s.level]}</span></div>
       <p>${esc(s.note)}</p>
@@ -1211,17 +1221,51 @@ $('#skillFilters').addEventListener('click', (e) => {
   skillState.cat = b.dataset.cat; renderSkills();
 });
 
+
+/* ---------- Tool icons (original generic glyphs, colour-coded per tool) ---------- */
+const ICON_PATHS = {
+  bars: '<rect x="4" y="12" width="4" height="8" rx="1" fill="currentColor" stroke="none"/><rect x="10" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/><rect x="16" y="9" width="4" height="11" rx="1" fill="currentColor" stroke="none"/>',
+  grid: '<rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
+  table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
+  cyl: '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>',
+  app: '<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M9 8h6M9 12h6M9 16h3"/>',
+  flow: '<circle cx="6" cy="7" r="2"/><circle cx="16" cy="18" r="2"/><path d="M8 7h4a4 4 0 0 1 4 4v5"/>',
+  code: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 6l-3 12"/>',
+  fx: '<text x="12" y="17" font-size="13" font-weight="700" text-anchor="middle" fill="currentColor" stroke="none" font-family="Georgia, serif" font-style="italic">fx</text>',
+  line: '<path d="M3 18l5-6 4 3 8-9"/><circle cx="8" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="15" r="1.2" fill="currentColor"/><circle cx="20" cy="6" r="1.2" fill="currentColor"/>',
+  nodes: '<circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7 6h10M6 8l5 8M18 8l-5 8"/>',
+  layers: '<path d="M12 4l8 4-8 4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4"/>',
+  book: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v18M12 8h4M12 12h4"/>',
+  chat: '<path d="M4 5h16v11H9l-5 4z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  bell: '<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/>',
+  folder: '<path d="M3 6h7l2 2h9v11H3z"/>'
+};
+const TOOL_ICONS = [
+  [/power bi/, 'bars', '#d99a00'], [/power apps|powerapps/, 'app', '#8a4fbf'], [/power automate|automation|flow/, 'flow', '#2f6fe0'],
+  [/power fx/, 'fx', '#8a4fbf'], [/dax/, 'fx', '#d99a00'], [/deneb|matplotlib|seaborn/, 'line', '#d99a00'], [/excel/, 'grid', '#1d8348'],
+  [/sql/, 'cyl', '#3c82c4'], [/python/, 'code', '#3776ab'], [/data model|scikit|lifelines/, 'nodes', '#5b6bd0'],
+  [/streamlit|pytorch/, 'layers', '#d9483f'], [/jupyter/, 'book', '#e8772e'], [/pandas|numpy/, 'table', '#5b6bd0'],
+  [/teams/, 'chat', '#5b5fc7'], [/email/, 'mail', '#6b7a90'], [/alert/, 'bell', '#d9483f'], [/sharepoint/, 'folder', '#1f8a9a']
+];
+function ic(name) {
+  const n = String(name || '').toLowerCase();
+  const hit = TOOL_ICONS.find((t) => t[0].test(n));
+  if (!hit) return '';
+  return `<svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:${hit[2]}" aria-hidden="true" focusable="false">${ICON_PATHS[hit[1]]}</svg>`;
+}
+
 /* ---------- Projects ---------- */
 const projState = { cat: 'All' };
 function renderProjects() {
   const cats = ['All', ...portfolioData.projectCategories];
-  $('#projectFilters').innerHTML = cats.map((c) => `<button class="chip" type="button" data-cat="${esc(c)}" aria-pressed="${c === projState.cat}">${esc(c)}</button>`).join('');
+  $('#projectFilters').innerHTML = cats.map((c) => `<button class="chip" type="button" data-cat="${esc(c)}" aria-pressed="${c === projState.cat}">${ic(c)}${esc(c)}</button>`).join('');
   const list = portfolioData.projects.filter((p) => projState.cat === 'All' || p.cat === projState.cat);
   const card = (p) => `
     <button class="pcard" type="button" data-id="${esc(p.id)}" aria-label="Open project: ${esc(p.title)}">
       <div class="pthumb">${p.cover ? `<img src="${p.cover}" alt="" loading="lazy"${p.coverFit ? ` style="object-fit:${p.coverFit};background:var(--surface)"` : ''}>` : thumb(p.thumb)}</div>
       <div class="pbody">
-        <div class="pills"><span class="pill">${esc(p.cat)}</span>${p.sample ? '<span class="pill sample">Sample</span>' : ''}</div>
+        <div class="pills"><span class="pill">${ic(p.cat)}${esc(p.cat)}</span>${p.sample ? '<span class="pill sample">Sample</span>' : ''}</div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.summary)}</p>
         <div class="pmetric"><b>${esc(p.metrics[0].v)}</b>${esc(p.metrics[0].l)}</div>
@@ -1256,7 +1300,7 @@ function openProject(id, trigger) {
   modal.innerHTML = `
     <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
       <div class="sheet-head">
-        <div class="sheet-sub"><div class="pills"><span class="pill">${esc(p.cat)}</span>${p.sample ? '<span class="pill sample">Sample</span>' : ''}</div><h3 id="mTitle">${esc(p.title)}</h3></div>
+        <div class="sheet-sub"><div class="pills"><span class="pill">${ic(p.cat)}${esc(p.cat)}</span>${p.sample ? '<span class="pill sample">Sample</span>' : ''}</div><h3 id="mTitle">${esc(p.title)}</h3></div>
         <button class="close" type="button" id="mClose" aria-label="Close project">×</button>
       </div>
       <div class="sheet-body">
@@ -1275,8 +1319,8 @@ function openProject(id, trigger) {
           <div class="fact"><h4>Business impact</h4><p>${esc(p.impact)}</p></div>
           <div class="metrics num">${p.metrics.map((m) => `<div class="metric"><b>${esc(m.v)}</b><span>${esc(m.l)}</span></div>`).join('')}</div>
           ${p.stack
-            ? `<div class="fact"><h4>Built with</h4><div class="flow">${p.stack.map((n) => `<span class="node">${esc(n)}</span>`).join('')}</div></div>`
-            : `<div class="fact"><h4>Architecture</h4><div class="flow">${p.flow.map((n, i) => `${i ? '<span class="arrow">→</span>' : ''}<span class="node">${esc(n)}</span>`).join('')}</div></div>`}
+            ? `<div class="fact"><h4>Built with</h4><div class="flow">${p.stack.map((n) => `<span class="node">${ic(n)}${esc(n)}</span>`).join('')}</div></div>`
+            : `<div class="fact"><h4>Architecture</h4><div class="flow">${p.flow.map((n, i) => `${i ? '<span class="arrow">→</span>' : ''}<span class="node">${ic(n)}${esc(n)}</span>`).join('')}</div></div>`}
           ${p.links.length ? `<div class="fact"><h4>Links</h4><div class="links">${p.links.map((l) => l.href
             ? (l.href.startsWith('#') ? `<a class="btn small" href="${esc(l.href)}" data-jump>${esc(l.label)}</a>` : `<a class="btn small" href="${esc(l.href)}" target="_blank" rel="noopener">${esc(l.label)}</a>`)
             : `<span class="btn small" aria-disabled="true" title="Add this URL in portfolioData">${esc(l.label)}</span>`).join('')}</div></div>` : ''}
@@ -1361,11 +1405,11 @@ function highlight(code) {
 }
 let snipId = portfolioData.snippets[0].id;
 function renderCode() {
-  $('#codeTabs').innerHTML = portfolioData.snippets.map((s) => `<button class="code-tab" role="tab" type="button" data-id="${s.id}" aria-selected="${s.id === snipId}"><small>${esc(s.lang)}${s.sample ? ' · sample' : ''}</small><b>${esc(s.title)}</b></button>`).join('');
+  $('#codeTabs').innerHTML = portfolioData.snippets.map((s) => `<button class="code-tab" role="tab" type="button" data-id="${s.id}" aria-selected="${s.id === snipId}"><small>${ic(s.lang)}${esc(s.lang)}${s.sample ? ' · sample' : ''}</small><b>${esc(s.title)}</b></button>`).join('');
   const s = portfolioData.snippets.find((x) => x.id === snipId);
   $('#codePanel').innerHTML = `
     <div class="code-box">
-      <div class="code-bar"><span>${esc(s.lang)}</span><button type="button" id="copyCode">Copy</button></div>
+      <div class="code-bar"><span>${ic(s.lang)}${esc(s.lang)}</span><button type="button" id="copyCode">Copy</button></div>
       <pre class="code" tabindex="0"><code>${highlight(s.code)}</code></pre>
     </div>
     <div class="explain">
