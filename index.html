@@ -1669,11 +1669,11 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     const slots = slotsFor(type, n, vals);
     const st = toks.map((tk, i) => {
       let m = 0;
-      if (i < n) m = lt < TB ? clamp((lt - TC - i * STEP) / DUR, 0, 1) : 1 - clamp((lt - TB - tk.sd) / BDUR, 0, 1);
-      const d = drift(tk, t), e = ease(m), sl = slots[i];
-      const pos = sl ? { x: lerp(d.x, sl.x, e), y: lerp(d.y, sl.y, e) } : d;
+      m = lt < TB ? clamp((lt - TC - i * STEP) / DUR, 0, 1) : 1 - clamp((lt - TB - tk.sd) / BDUR, 0, 1);
+      const d = drift(tk, t), e = ease(m), sl = slots[i] || { x: AX + ((i * 37) % 60 - 30), y: 138 + ((i * 17) % 40 - 20) };
+      const pos = { x: lerp(d.x, sl.x, e), y: lerp(d.y, sl.y, e) };
       let g = 0;
-      if (i < n && lt < TB) { const mm = (lt - TC - i * STEP) / DUR; g = sstep(-0.35, 0.08, mm) * (1 - sstep(0.86, 1, mm)); }
+      if (lt < TB) { const mm = (lt - TC - i * STEP) / DUR; g = sstep(-0.35, 0.08, mm) * (1 - sstep(0.86, 1, mm)); }
       return { m, s: sstep(0.72, 1, m), pos, g };
     });
 
@@ -1748,7 +1748,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     toks.forEach((tk, i) => {
       const o = st[i]; ctx.font = '600 ' + tk.sz + 'px ui-monospace, Menlo, Consolas, monospace';
-      ctx.shadowColor = 'rgba(0,10,30,.9)'; ctx.shadowBlur = 4; ctx.fillStyle = 'rgba(232,244,255,' + (0.62 + 0.38 * o.m) + ')';
+      ctx.shadowColor = 'rgba(0,10,30,.9)'; ctx.shadowBlur = 4; const fade = i >= n ? 1 - sstep(0.55, 1, o.m) : 1; ctx.fillStyle = 'rgba(232,244,255,' + ((0.62 + 0.38 * o.m) * fade) + ')';
       ctx.fillText(String(vals[i]), o.pos.x, o.pos.y); ctx.shadowBlur = 0;
     });
   }
