@@ -1543,7 +1543,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
 (function heroVideo() {
   const v = $('#bgVideo'), btn = $('#bgToggle'), sbtn = $('#bgSound'), bg = $('#heroBg'), hero = $('.hero');
   if (!v || !bg || !hero) return;
-  const SOUND_LEVEL = 0.7; // hero video volume when sound is on (1 = full)
+  const SOUND_LEVEL = 0.5; // hero video volume when sound is on (1 = full)
   let inHero = true, activated = false, soundWanted = store.get('bgSound') !== '0', ramp = 0;
   // band height = from the page top to the end of the hero
   const size = () => { bg.style.height = Math.round(hero.getBoundingClientRect().bottom + window.scrollY) + 'px'; };
