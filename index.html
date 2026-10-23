@@ -127,7 +127,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: min(76vh, 680px);
 }
 /* jellyfish + floating numbers */
-.jelly-stage { position: absolute; top: 2px; right: 0; width: clamp(250px, 29vw, 380px); aspect-ratio: 380 / 210; z-index: 2; pointer-events: none; display: block; }
+.jelly-stage { position: absolute; top: 2px; right: clamp(-60px, -4vw, 0px); width: clamp(250px, 29vw, 380px); aspect-ratio: 380 / 210; z-index: 2; pointer-events: none; display: block; }
 @media (max-width: 860px) { .jelly-stage { width: clamp(220px, 42vw, 320px); } }
 @media (max-width: 600px) { .jelly-stage { position: relative; top: auto; right: auto; order: -2; width: 100%; max-width: 360px; margin: 0 auto -6px; } }
 /* profile avatar */
@@ -1711,7 +1711,6 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
       ctx.strokeStyle = 'rgba(214,232,255,' + (0.3 + 0.2 * Math.sin(t * 2 + j)) + ')'; ctx.lineWidth = Math.max(0.8, wd * 0.28);
       ctx.beginPath(); ctx.moveTo(p0.x - wd * 0.2, p0.y); ctx.bezierCurveTo(c1x - wd * 0.2, c1y, c2x - wd * 0.2, c2y, tip.x - wd * 0.2, tip.y); ctx.stroke();
     }
-    ctx.fillStyle = '#05060a'; ctx.strokeStyle = 'rgba(214,232,255,.8)'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(ax, ay, 5.5, 0, 6.283); ctx.fill(); ctx.stroke();
 
     // numbers
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
