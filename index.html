@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jansher Khan | Business Analyst &amp; BI / Power Platform Specialist</title>
 <meta name="description" content="Portfolio of Jansher Khan: Power BI dashboards, Power Apps, automation and data analysis.">
-</head>
-<body>
-<meta charset="utf-8">
 
+<meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -344,6 +342,21 @@ textarea { min-height: 120px; resize: vertical; }
 .copy-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .copy-row code { font-family: var(--font-mono); font-size: 14px; background: var(--surface-2); padding: 4px 8px; border-radius: 4px; user-select: all; overflow-wrap: anywhere; }
 
+.tool-flow { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.tool-flow h3 { margin: 0; font-size: 16px; }
+.tf-view { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); padding: 8px 0; }
+.tf-track { display: flex; gap: 18px; width: max-content; animation: tfmove 22s linear infinite; }
+.tf-view:hover .tf-track { animation-play-state: paused; }
+.tf-item { display: grid; justify-items: center; gap: 8px; width: 104px; flex: none; font-size: 13px; font-weight: 600; text-align: center; }
+.tf-ico { width: 72px; height: 72px; border-radius: 18px; background: var(--bg); border: 1px solid var(--line); display: grid; place-items: center; box-shadow: 0 6px 16px rgba(0,0,0,.12); animation: tfbob 2.6s ease-in-out infinite; }
+.tf-item:nth-child(even) .tf-ico { animation-delay: -1.3s; }
+.tf-ico svg { width: 38px; height: 38px; }
+.tf-arrow { flex: none; align-self: center; margin-top: -22px; color: var(--muted); opacity: .7; }
+.tf-note { margin: 0; font-size: 13px; color: var(--muted); }
+@keyframes tfmove { to { transform: translateX(-50%); } }
+@keyframes tfbob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@media (prefers-reduced-motion: reduce) { .tf-track { animation: none; flex-wrap: wrap; width: auto; justify-content: center; } .tf-ico { animation: none; } .tf-view { -webkit-mask-image: none; mask-image: none; } .tf-dup { display: none; } }
+
 footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
 #toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 6px; font-size: 14px; z-index: 80; max-width: calc(100% - 32px); }
@@ -390,7 +403,6 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 <div class="hero-bg" id="heroBg" aria-hidden="true">
   <video id="bgVideo" muted loop playsinline preload="auto" autoplay poster="site-background-poster.jpg" tabindex="-1">
     <source src="site-background.mp4" type="video/mp4">
-    
   </video>
 </div>
 
@@ -492,16 +504,14 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
     <div class="sec-head">
       <div class="eyebrow">Contact</div>
       <h2>Hire me, or just say hello</h2>
-      <p>Tell me about the report nobody trusts or the process that still runs on email.</p>
+      <p>Tell me about the report nobody trusts or the process that still runs on email. Reach me by phone, email or LinkedIn.</p>
     </div>
     <div class="contact-grid">
-      <form id="contactForm" novalidate>
-        <label for="cName">Name<input id="cName" name="name" autocomplete="name" required></label>
-        <label for="cEmail">Email<input id="cEmail" name="email" type="email" autocomplete="email" required></label>
-        <label for="cMsg">What do you need?<textarea id="cMsg" name="message" required></textarea></label>
-        <div><button class="btn primary" type="submit">Send message</button></div>
-        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
-      </form>
+      <div class="tool-flow" aria-label="Tools I use: Power BI, Power Automate, Power Apps, SQL and Excel">
+        <h3>Tools I work with every day</h3>
+        <div class="tf-view"><div class="tf-track" id="toolFlow"></div></div>
+        <p class="tf-note">Data in, decisions out: from SQL and Excel, through Power Automate and Power Apps, into Power BI.</p>
+      </div>
       <div class="stack">
         <div class="panel">
           <h3>Phone</h3>
@@ -1512,29 +1522,11 @@ function renderMedia() {
     $('#copyMail').addEventListener('click', () => copyText(p.email, 'Email copied'));
   } else { $('#mailPanel').hidden = true; }
   $('#socials').innerHTML = p.socials.map((s) => `<a class="btn small" href="${esc(s.href)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('');
-  $('#contactForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const f = e.target, st = $('#formStatus');
-    if (!f.name.value.trim()) { st.textContent = 'Enter your name.'; f.name.focus(); return; }
-    if (!f.email.validity.valid || !f.email.value.trim()) { st.textContent = 'Enter a valid email address so I can reply.'; f.email.focus(); return; }
-    if (!f.message.value.trim()) { st.textContent = 'Write a short message about what you need.'; f.message.focus(); return; }
-    const subject = 'Portfolio enquiry from ' + f.name.value.trim();
-    const mailto = () => {
-      const body = f.message.value.trim() + '\n\nFrom: ' + f.name.value.trim() + ' (' + f.email.value.trim() + ')';
-      st.innerHTML = 'Opening your email app… If nothing opens, please write to <a href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a>.';
-      window.location.href = 'mailto:' + p.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    };
-    // With a Web3Forms access key (portfolioData.profile.formKey) the message is delivered straight to the inbox; without one it opens the visitor's email app.
-    if (!p.formKey) { mailto(); return; }
-    const btn = f.querySelector('button[type="submit"]'); btn.disabled = true; st.textContent = 'Sending…';
-    fetch('https://api.web3forms.com/submit', {
-      method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ access_key: p.formKey, subject, from_name: f.name.value.trim(), name: f.name.value.trim(), email: f.email.value.trim(), message: f.message.value.trim() })
-    }).then((r) => r.json()).then((d) => {
-      if (d && d.success) { st.textContent = 'Thank you. Your message was sent and I will reply soon.'; f.reset(); }
-      else { mailto(); }
-    }).catch(() => mailto()).finally(() => { btn.disabled = false; });
-  });
+  // Tools flowing in a loop: Power BI, Power Automate, Power Apps, SQL, Excel
+  const tools = [['SQL', 'cyl', '#3c82c4'], ['Excel', 'grid', '#1d8348'], ['Power Automate', 'flow', '#2f6fe0'], ['Power Apps', 'app', '#8a4fbf'], ['Power BI', 'bars', '#d99a00']];
+  const arrow = '<svg class="tf-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  const one = (dup) => tools.map((t) => `<div class="tf-item${dup ? ' tf-dup' : ''}"${dup ? ' aria-hidden="true"' : ''}><div class="tf-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:${t[2]}" aria-hidden="true" focusable="false">${ICON_PATHS[t[1]]}</svg></div>${t[0]}</div>${dup ? arrow.replace('class="tf-arrow"', 'class="tf-arrow tf-dup"') : arrow}`).join('');
+  $('#toolFlow').innerHTML = one(false) + one(true);
 })();
 
 renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); renderMedia();
@@ -1616,5 +1608,4 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
 })();
 </script>
 
-</body>
-</html>
+
