@@ -1624,7 +1624,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
   const W = 380, H = 210, AX = 190, AY = 22, NT = 24;
   const T = 14, TC = 2.2, STEP = 0.4, DUR = 1.15, TB = 10.4, BDUR = 1.1;
   const SEQ = [['bar', 7], ['donut', 5], ['line', 8], ['gantt', 6], ['pie', 6], ['hbar', 6], ['area', 8], ['scatter', 10], ['bar', 5], ['waterfall', 7], ['funnel', 5], ['donut', 7], ['bar', 10], ['line', 6]];
-  const PAL = ['#5ad1ff', '#a78bfa', '#ffc233', '#ff7ab6', '#5fe3a1', '#ff9f5a', '#7aa2ff', '#e879f9'];
+  const PAL = ['#bfeaff', '#2b8fd6', '#7fd2ff', '#1d6fb0', '#a2dcff', '#3aa6ea', '#d6f2ff', '#2479bd']; // one blue hue, light and dark shades
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const toks = [];
   for (let i = 0; i < 12; i++) toks.push({ bx: 34 + rnd() * 312, by: 54 + rnd() * 130, ax: 14 + rnd() * 30, ay: 8 + rnd() * 20, fx: 0.3 + rnd() * 0.5, fy: 0.3 + rnd() * 0.5, p1: rnd() * 6.28, p2: rnd() * 6.28, sd: rnd() * 0.4, sz: 10 + rnd() * 3 });
@@ -1721,7 +1721,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     } else if (type === 'waterfall') {
       const any = Math.max(...st.slice(0, n).map((o) => o.s));
       ctx.strokeStyle = 'rgba(200,220,255,' + (0.35 * any) + ')'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(AX - n * 13 - 4, 187); ctx.lineTo(AX + n * 13 + 4, 187); ctx.stroke();
-      for (let i = 0; i < n; i++) { const o = st[i]; if (o.s <= 0) continue; const sl = slots[i], ya = 187 - sl.l0 * 0.9, yb = 187 - (sl.l0 + (sl.l1 - sl.l0) * o.s) * 0.9; ctx.fillStyle = sl.l1 >= sl.l0 ? '#5fe3a1' : '#ff7a7a'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(sl.x0, Math.min(ya, yb), 20, Math.max(2, Math.abs(yb - ya)), 3) : ctx.rect(sl.x0, Math.min(ya, yb), 20, Math.max(2, Math.abs(yb - ya))); ctx.fill(); }
+      for (let i = 0; i < n; i++) { const o = st[i]; if (o.s <= 0) continue; const sl = slots[i], ya = 187 - sl.l0 * 0.9, yb = 187 - (sl.l0 + (sl.l1 - sl.l0) * o.s) * 0.9; ctx.fillStyle = sl.l1 >= sl.l0 ? '#a2dcff' : '#1f78bd'; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(sl.x0, Math.min(ya, yb), 20, Math.max(2, Math.abs(yb - ya)), 3) : ctx.rect(sl.x0, Math.min(ya, yb), 20, Math.max(2, Math.abs(yb - ya))); ctx.fill(); }
     } else if (type === 'funnel') {
       for (let i = 0; i < n; i++) { const o = st[i]; if (o.s <= 0) continue; const sl = slots[i], a = sl.w * o.s / 2, b = sl.w2 * o.s / 2; ctx.fillStyle = PAL[i % 8]; ctx.globalAlpha = 0.9; ctx.beginPath(); ctx.moveTo(AX - a, sl.fy); ctx.lineTo(AX + a, sl.fy); ctx.lineTo(AX + b, sl.fy + 17); ctx.lineTo(AX - b, sl.fy + 17); ctx.closePath(); ctx.fill(); ctx.globalAlpha = 1; }
     }
