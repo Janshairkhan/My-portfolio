@@ -127,7 +127,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: min(76vh, 680px);
 }
 /* jellyfish + floating numbers */
-.jelly-stage { position: absolute; top: -30px; right: calc(-1 * (max(40px, (100vw - 1120px) / 2) - 4px)); width: clamp(250px, 29vw, 380px); aspect-ratio: 380 / 210; z-index: 2; pointer-events: none; display: block; }
+.jelly-stage { position: absolute; top: -30px; right: 0; width: clamp(250px, 29vw, 380px); aspect-ratio: 380 / 210; z-index: 2; pointer-events: none; display: block; }
 @media (max-width: 860px) { .jelly-stage { width: clamp(220px, 42vw, 320px); } }
 @media (max-width: 600px) { .jelly-stage { position: relative; top: auto; right: auto; order: -2; width: 100%; max-width: 360px; margin: 0 auto -6px; } }
 /* profile avatar */
@@ -1753,11 +1753,17 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     });
   }
 
+  const place = () => {
+    if (window.innerWidth <= 600) { cv.style.right = ''; return; }
+    const hero = cv.parentElement, room = document.documentElement.clientWidth - hero.getBoundingClientRect().right - 6;
+    cv.style.right = -Math.max(0, Math.min(125, room)) + 'px';
+  };
+  place(); window.addEventListener('resize', place); window.addEventListener('load', place);
   window.__jellyRender = render;
   const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) { render(8); window.addEventListener('resize', () => render(8)); return; }
+  const speed = reduce ? 0.55 : 1; // visitors who ask for less motion get a calmer, slower loop instead of a frozen picture
   let acc = 0, last = 0, vis = true, raf = 0;
-  const frame = (now) => { raf = 0; if (!vis || document.hidden) { last = 0; return; } if (last) acc += Math.min(0.1, (now - last) / 1000); last = now; render(acc); raf = requestAnimationFrame(frame); };
+  const frame = (now) => { raf = 0; if (!vis || document.hidden) { last = 0; return; } if (last) acc += Math.min(0.1, (now - last) / 1000) * speed; last = now; render(acc); raf = requestAnimationFrame(frame); };
   const kick = () => { if (!raf && vis && !document.hidden) raf = requestAnimationFrame(frame); };
   if ('IntersectionObserver' in window) new IntersectionObserver((es) => { vis = es[0].isIntersecting; if (vis) kick(); }, { threshold: 0 }).observe(cv);
   document.addEventListener('visibilitychange', () => { last = 0; kick(); });
