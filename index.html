@@ -127,7 +127,7 @@ button { font: inherit; color: inherit; cursor: pointer; }
   min-height: min(76vh, 680px);
 }
 /* jellyfish + floating numbers */
-.jelly-stage { position: absolute; top: -16px; right: 0; width: clamp(250px, 29vw, 380px); aspect-ratio: 380 / 210; z-index: 2; pointer-events: none; display: block; }
+.jelly-stage { position: absolute; top: -13px; right: 0; width: clamp(250px, 29vw, 380px); aspect-ratio: 380 / 254; z-index: 2; pointer-events: none; display: block; }
 @media (max-width: 860px) { .jelly-stage { width: clamp(220px, 42vw, 320px); } }
 @media (max-width: 600px) { .jelly-stage { position: relative; top: auto; right: auto; order: -2; width: 100%; max-width: 360px; margin: 0 auto -6px; } }
 /* profile avatar */
@@ -1621,13 +1621,15 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
   const cv = document.getElementById('dataJelly');
   if (!cv || !cv.getContext) return;
   const ctx = cv.getContext('2d');
-  const W = 380, H = 210, AX = 190, AY = 22, NT = 24;
+  const W = 380, H = 254, OY = 44, AX = 190, AY = 22, NT = 24;
   const T = 14, TC = 2.2, STEP = 0.4, DUR = 1.15, TB = 10.4, BDUR = 1.1;
   const SEQ = [['bar', 7], ['donut', 5], ['line', 8], ['gantt', 6], ['pie', 6], ['hbar', 6], ['area', 8], ['scatter', 10], ['bar', 5], ['waterfall', 7], ['funnel', 5], ['donut', 7], ['bar', 10], ['line', 6]];
   const PAL = ['#bfeaff', '#2b8fd6', '#7fd2ff', '#1d6fb0', '#a2dcff', '#3aa6ea', '#d6f2ff', '#2479bd']; // one blue hue, light and dark shades
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const toks = [];
-  for (let i = 0; i < 12; i++) toks.push({ bx: 34 + rnd() * 312, by: 54 + rnd() * 130, ax: 14 + rnd() * 30, ay: 8 + rnd() * 20, fx: 0.3 + rnd() * 0.5, fy: 0.3 + rnd() * 0.5, p1: rnd() * 6.28, p2: rnd() * 6.28, sd: rnd() * 0.4, sz: 10 + rnd() * 3 });
+  // numbers float all around the jellyfish: above, to the left and right, and below
+  const ringPos = (i) => { const a = i / 12 * 6.2832 + 0.3 + rnd() * 0.25, rx = 105 + rnd() * 62, ry = 52 + rnd() * 44; return { bx: AX + Math.cos(a) * rx, by: 62 + Math.sin(a) * ry }; };
+  for (let i = 0; i < 12; i++) toks.push(Object.assign(ringPos(i), { ax: 8 + rnd() * 12, ay: 5 + rnd() * 8, fx: 0.3 + rnd() * 0.5, fy: 0.3 + rnd() * 0.5, p1: rnd() * 6.28, p2: rnd() * 6.28, sd: rnd() * 0.4, sz: 10 + rnd() * 3 }));
   const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
   const lerp = (a, b, k) => a + (b - a) * k;
   const sstep = (a, b, x) => { const k = clamp((x - a) / (b - a), 0, 1); return k * k * (3 - 2 * k); };
@@ -1663,7 +1665,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     const dpr = Math.min(window.devicePixelRatio || 1, 2), cw = cv.clientWidth || W;
     if (cv.width !== Math.round(cw * dpr)) { cv.width = Math.round(cw * dpr); cv.height = Math.round(cw * dpr * H / W); }
     const k = cv.width / W;
-    ctx.setTransform(k, 0, 0, k, 0, 0); ctx.clearRect(0, 0, W, H);
+    ctx.setTransform(k, 0, 0, k, 0, 0); ctx.clearRect(0, 0, W, H); ctx.translate(0, OY);
     const c = Math.floor(t / T), lt = t - c * T, sq = SEQ[c % SEQ.length], type = sq[0], n = sq[1];
     const vals = toks.map((_, i) => valOf(c, i));
     if (type === 'funnel') { const sv = vals.slice(0, n).sort((a, b) => b - a); for (let i = 0; i < n; i++) vals[i] = sv[i]; }
