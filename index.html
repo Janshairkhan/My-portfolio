@@ -283,6 +283,10 @@ section { padding-block: 56px 8px; scroll-margin-top: 72px; }
 .case-sec h2 { font-size: clamp(20px, 2.6vw, 26px); margin-bottom: 12px; }
 .case-sec > p { max-width: 75ch; }
 .case-list { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.case-video { max-width: 860px; }
+.case-video video { width: 100%; border: 1px solid var(--line); border-radius: 8px; display: block; background: #000; aspect-ratio: 16 / 9; }
+.case-video figure { margin: 0; }
+.case-video figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
 .case-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .case-item { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px; }
 .case-item h4 { font-size: 15px; margin-bottom: 4px; }
@@ -679,6 +683,7 @@ const portfolioData = {
         { n: 'Carrefour Pakistan', where: 'Hypermarket and app ordering', strength: 'App ordering and click-and-collect at selected stores.', meaning: 'Sets the standard for app experience and pickup.' }
       ],
       defend: 'DSM\'s strengths are local branches, a very wide range under one roof (including pharmacy and beauty), private-label products, same-day delivery and ordering by WhatsApp. The gap is that availability, delivery information and promotions are not yet measured or kept consistent online. A 2023 comparison site listed Naheed at Rs 199 standard and Rs 325 express delivery, Metro at Rs 99 plus a charge on orders under Rs 2,500, and Carrefour at Rs 95 to 175. DSM charges Rs 199 flat. Fees will have changed, so they need a re-check.',
+      video: { src: 'dsm-data-story.mp4', srcWebm: 'dsm-data-story.webm', poster: 'dsm-data-story-poster.jpg', caption: 'DSM: A Data Story. A 90-second walkthrough of the business, the leaks and the five growth projects.' },
       solution: 'Five projects, built in order of impact and measured against a baseline: an availability forecast first, then basket and delivery-fee tests, promotion analysis, customer segments, and a branch dashboard with automated catalogue checks.',
       projects: [
         { n: '1. Availability forecast and alerts by branch', problem: 'Out-of-stock items shown online, and stock that must be checked by phone.', approach: 'Time-series model with weekday, season and promotion effects; reorder alerts and back-in-stock notices.', kpi: 'Online fill rate, stockout rate, cancellations due to stock' },
@@ -1521,7 +1526,7 @@ function caseHTML(c) {
   const list = (arr, f) => arr && arr.length ? arr.map(f).join('') : '';
   const sec = (t, body) => body ? `<section class="case-sec"><h2>${t}</h2>${body}</section>` : '';
   const shots = list(c.shots, (x) => `<figure><img src="${x.src}" alt="${esc(x.caption || '')}" loading="lazy" onerror="this.closest('figure').hidden=true"><figcaption>${esc(x.caption || '')}</figcaption></figure>`);
-  const video = c.video ? `<figure><video src="${c.video.src}"${c.video.poster ? ` poster="${c.video.poster}"` : ''} controls preload="metadata" playsinline></video><figcaption>${esc(c.video.caption || '')}</figcaption></figure>` : '';
+  const video = c.video ? `<figure><video${c.video.poster ? ` poster="${c.video.poster}"` : ''} controls preload="metadata" playsinline>${c.video.srcWebm ? `<source src="${c.video.srcWebm}" type="video/webm">` : ''}<source src="${c.video.src}" type="video/mp4"></video><figcaption>${esc(c.video.caption || '')}</figcaption></figure>` : '';
   return `
     <div class="case-bar"><button class="btn small" type="button" id="caseBack">← Back to portfolio</button><span class="crumb">Business Solutions / ${esc(c.company)}</span></div>
     <article class="case-wrap" aria-label="Case study: ${esc(c.company)}">
@@ -1530,13 +1535,13 @@ function caseHTML(c) {
         <h1>${esc(c.company)}: ${esc(c.title)}</h1>
         <p>${esc(c.summary)}</p>
       </header>
+      ${sec('Watch the data story', video ? `<div class="case-video">${video}</div>` : '')}
       ${sec('The situation', `<p>${esc(c.problem)}</p>${c.snapshot ? `<div class="case-two" style="margin-top:14px">${list(c.snapshot, (p) => `<div class="case-item"><h4>${esc(p.k)}</h4><p>${esc(p.v)}</p></div>`)}</div>` : ''}`)}
       ${sec('Where it hurts', c.pains ? `<div class="case-two">${list(c.pains, (p, i) => `<div class="case-item"><h4>${i + 1}. ${esc(p.h)}</h4>${p.seen ? `<p><b>Observed:</b> ${esc(p.seen)}</p><p><b>Likely impact:</b> ${esc(p.impact)}</p><p><b>Fix:</b> ${esc(p.fix)}</p>` : `<p>${esc(p.t)}</p>`}</div>`)}</div>${c.painsNote ? `<p class="caption">${esc(c.painsNote)}</p>` : ''}` : '')}
       ${sec('Competitor landscape', c.competitors ? `<div class="case-two">${list(c.competitors, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Competes in:</b> ${esc(p.where)}</p><p><b>Strengths:</b> ${esc(p.strength)}</p><p><b>For this business:</b> ${esc(p.meaning)}</p></div>`)}</div>${c.defend ? `<p style="margin-top:14px">${esc(c.defend)}</p>` : ''}` : '')}
       ${sec('The solution', `<p>${esc(c.solution)}</p>${c.flow ? `<div class="flow" style="margin-top:14px">${c.flow.map((n) => `<span class="node">${esc(n)}</span>`).join('<span class="arrow">→</span>')}</div>` : ''}${c.projects ? `<div class="case-two" style="margin-top:14px">${list(c.projects, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Problem:</b> ${esc(p.problem)}</p><p><b>Approach:</b> ${esc(p.approach)}</p><p><b>KPI:</b> ${esc(p.kpi)}</p></div>`)}</div>` : ''}`)}
       ${sec('Visuals', shots ? `<div class="case-shots">${shots}</div>` : '')}
       ${sec('First 90 days', c.roadmap ? `<div class="case-two">${list(c.roadmap, (p) => `<div class="case-item"><h4>${esc(p.h)}</h4><p>${esc(p.t)}</p></div>`)}</div>` : '')}
-      ${sec('Demo video', video ? `<div class="case-shots">${video}</div>` : '')}
       ${sec('What gets delivered', c.deliverables ? `<div class="case-two">${list(c.deliverables, (d) => `<div class="case-item"><p style="color:var(--ink)">${esc(d)}</p></div>`)}</div>` : '')}
       ${sec('KPIs tracked', c.kpis ? `<div class="pills">${list(c.kpis, (k) => `<span class="pill">${esc(k)}</span>`)}</div>` : '')}
       ${sec('Expected impact', c.impact ? `<div class="case-metrics">${list(c.impact, (m) => `<div class="metric"><b>${esc(m.v)}</b><span>${esc(m.l)}</span></div>`)}</div>${c.impactNote ? `<p class="caption">${esc(c.impactNote)}</p>` : ''}` : '')}
