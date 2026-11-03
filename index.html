@@ -707,6 +707,47 @@ const portfolioData = {
       assumptions: 'This case study uses only public information from dsmonline.pk, so no percentage gains are promised. Targets would be set after the baseline in the first 30 days.',
       sources: ['DSM Online: Nazimabad home, Contact, Delivery information and FAQ pages', 'ProPakistani: Yango and Naheed', 'Zameen: Karachi supermarkets', 'Picodi: delivery terms (2023)'],
       disclaimer: 'Independent portfolio concept prepared on 29 October 2026 from public information on dsmonline.pk and other public sources. It uses no internal data, and it is not affiliated with or endorsed by Diamond Super Market.'
+    },
+    {
+      id: 'codebricks-global', company: 'CodeBricks Global', sector: 'Software agency', sample: true,
+      title: 'Turning website clicks into booked calls',
+      summary: 'Where an AI-first software agency\'s website loses enquiries, and five analytics projects that turn visitors into clients.',
+      problem: 'CodeBricks Global is an AI-first software agency in Lahore and Wyoming. A client books a free discovery call, then moves through a discovery sprint, weekly build sprints and a 30-day stability window after launch. The website claims 200+ projects, 50+ developers and a free 60-minute discovery call. From public pages, the gap is not the offer but the proof and the measurement: visitors hesitate, leave without booking, and nobody can say where or why.',
+      snapshot: [
+        { k: 'Business', v: 'AI-first software agency with teams in Lahore and Wyoming.' },
+        { k: 'Services', v: 'AI agents, web and mobile apps, automation, cloud, security and UI/UX.' },
+        { k: 'Client journey', v: 'Idea (free call), Discovery (sprint and tech roadmap), Build (weekly sprints), Launch (30-day stability window).' },
+        { k: 'Claims on the site', v: '200+ projects, 50+ developers and a free 60-minute discovery call.' }
+      ],
+      pains: [
+        { h: 'Proof is synthetic', seen: 'All three case studies use sandbox data, with no client name or result.', impact: 'Buyers cannot judge the quality of past work, so they hesitate.', fix: 'A proof library of real, named case studies with measured results.' },
+        { h: 'Stats can show 0', seen: 'One block reads 0+ and 0%, while another reads 200+ and 98%.', impact: 'Conflicting numbers weaken trust in every claim.', fix: 'Drive the figures from one tracked source of truth.' },
+        { h: 'No pricing signal', seen: 'There is no price range, so small buyers cannot compare.', impact: 'Smaller buyers leave before booking a call.', fix: 'A pricing and margin dashboard to set sensible ranges per project type.' },
+        { h: 'FAQ without answers', seen: 'Questions appear on the page, but the answers are missing.', impact: 'Visitors leave with their doubts unresolved.', fix: 'Use funnel data to see which questions matter, then write the answers.' },
+        { h: 'Nobody measures why visitors leave', seen: 'Seven small gaps add up to lost enquiries, and the drop-off is not tracked.', impact: 'Visitors leave without booking, and the cause stays invisible.', fix: 'Funnel analytics from visit to booked call, with lead scoring behind it.' }
+      ],
+      painsNote: 'Observed on public pages of codebricks.co. Each point is a hypothesis to confirm with the CodeBricks team.',
+      competitors: [
+        { n: 'Arbisoft', where: 'Software development for large clients', strength: 'Shows named clients: KAYAK, edX, World Bank and MIT.', meaning: 'Named clients give buyers instant proof.' },
+        { n: '10Pearls', where: 'Digital product and software services', strength: 'Shows named clients: Technisys and AARP Services.', meaning: 'Proof is visible before the first call.' },
+        { n: 'Folio3', where: 'Software development services', strength: 'Shows named clients: Sunburst Digital and PureLife.', meaning: 'Proof is visible before the first call.' },
+        { n: 'CodeBricks', where: 'AI-first software agency', strength: 'No client is named in its case studies yet.', meaning: 'The edge can be speed, if it shows proof.' }
+      ],
+      defend: 'Bigger agencies win with named clients, reviews and years in the market. CodeBricks\' edge can be speed, but only if it shows proof. Competitor figures are self-reported, so I treat them as claims, not facts.',
+      video: { src: 'cb-data-story.mp4', srcWebm: 'cb-data-story.webm', poster: 'cb-data-story-poster.jpg', caption: 'CodeBricks Global: A Data Story. A 90-second walkthrough of the business, the gaps and the five growth projects.' },
+      solution: 'Step one is to see the funnel: how many visitors came, how many read the services, how many started the form and how many booked a call, which shows exactly where visitors drop. Then a dashboard shows which sources bring leads, which leads close and which projects earn margin, with a forecast for next week. Five projects follow in order, and each builds on the last, giving more enquiries, faster quotes and healthier margins.',
+      projects: [
+        { n: '1. Funnel analytics', problem: 'Nobody knows where visitors drop before booking a call.', approach: 'Track visits, service-page reads, form starts and booked calls in one funnel.', kpi: 'Call-booking rate, enquiries per week' },
+        { n: '2. Lead scoring and win rate', problem: 'All enquiries look the same, so effort is not focused.', approach: 'Score every enquiry and learn which sources and lead types close.', kpi: 'Win rate, leads by source' },
+        { n: '3. Proof library (real case studies)', problem: 'Case studies use sandbox data with no client or result.', approach: 'Turn real projects into named case studies with measured results.', kpi: 'Call-booking rate on case-study visits' },
+        { n: '4. Pricing and margin dashboard', problem: 'No price signal, and margin per project is unclear.', approach: 'Track margin per project and use it to set price ranges.', kpi: 'Project margin' },
+        { n: '5. Retention and upsell tracker', problem: 'Value after launch is not tracked.', approach: 'Follow clients through the 30-day stability window and find upsell moments.', kpi: 'Repeat and upsell rate' }
+      ],
+      flow: ['Website and form data', 'Funnel and lead scoring', 'Power BI growth dashboard', 'Weekly forecast', 'Actions for sales and delivery'],
+      dataNeeded: ['Website analytics: visits, service-page views and form starts', 'Enquiry and call-booking records with lead source', 'Win and loss status for each lead', 'Revenue and cost per project'],
+      assumptions: 'This case study uses only public information from codebricks.co, so no percentage gains are promised. I would verify every point with the CodeBricks team and set targets after a baseline.',
+      sources: ['codebricks.co (public pages)', 'Public pages of Arbisoft, 10Pearls and Folio3 (self-reported client lists)'],
+      disclaimer: 'Independent portfolio concept prepared from public information on codebricks.co and competitor websites. It uses no internal data, and it is not affiliated with or endorsed by CodeBricks Global.'
     }
   ],
   skillCategories: ['BI & Visualization', 'Databases & Querying', 'Automation & Apps', 'Scripting & Analytics'],
