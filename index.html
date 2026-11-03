@@ -1841,7 +1841,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const toks = [];
   // numbers float all around the jellyfish: above, to the left and right, and below
-  const ringPos = (i) => { const a = i / 12 * 6.2832 + 0.3 + rnd() * 0.25, rx = 105 + rnd() * 62, ry = 52 + rnd() * 44; return { bx: AX + Math.cos(a) * rx, by: 62 + Math.sin(a) * ry }; };
+  const ringPos = (i) => { const a = i / 12 * 6.2832 + 0.3 + rnd() * 0.25, rx = 105 + rnd() * 62, ry = 52 + rnd() * 44; return { bx: AX - 22 + Math.cos(a) * rx, by: 62 + Math.sin(a) * ry }; };
   for (let i = 0; i < 12; i++) toks.push(Object.assign(ringPos(i), { ax: 8 + rnd() * 12, ay: 5 + rnd() * 8, fx: 0.3 + rnd() * 0.5, fy: 0.3 + rnd() * 0.5, p1: rnd() * 6.28, p2: rnd() * 6.28, sd: rnd() * 0.4, sz: 10 + rnd() * 3 }));
   const clamp = (x, a, b) => Math.min(b, Math.max(a, x));
   const lerp = (a, b, k) => a + (b - a) * k;
@@ -1901,11 +1901,12 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     const vals = toks.map((_, i) => valOf(c, i));
     if (type === 'funnel') { const sv = vals.slice(0, n).sort((a, b) => b - a); for (let i = 0; i < n; i++) vals[i] = sv[i]; }
     const slots = slotsFor(type, n, vals);
+    const CK = 1.22, CSH = -30, CTX = AX + CSH - AX * CK, CTY = 170 - 170 * CK; // chart is drawn larger and a little to the left
     const st = toks.map((tk, i) => {
       let m = 0;
       m = lt < TB ? clamp((lt - TC - i * STEP) / DUR, 0, 1) : 1 - clamp((lt - TB - tk.sd) / BDUR, 0, 1);
       const d = drift(tk, t), e = ease(m), sl = slots[i] || { x: AX + ((i * 37) % 60 - 30), y: 138 + ((i * 17) % 40 - 20) };
-      const pos = { x: lerp(d.x, sl.x, e), y: lerp(d.y, sl.y, e) };
+      const pos = { x: lerp(d.x, CTX + sl.x * CK, e), y: lerp(d.y, CTY + sl.y * CK, e) };
       let g = 0;
       if (lt < TB) { const mm = (lt - TC - i * STEP) / DUR; g = sstep(-0.35, 0.08, mm) * (1 - sstep(0.86, 1, mm)); }
       return { m, s: sstep(0.72, 1, m), pos, g };
@@ -1913,6 +1914,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
 
     // chart shapes
     ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.save(); ctx.translate(CTX, CTY); ctx.scale(CK, CK);
     if (type === 'bar') {
       const any = Math.max(...st.slice(0, n).map((o) => o.s));
       ctx.strokeStyle = 'rgba(200,220,255,' + (0.35 * any) + ')'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(AX - n * 13 - 4, 187); ctx.lineTo(AX + n * 13 + 4, 187); ctx.stroke();
@@ -1989,6 +1991,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
       for (let i = 0; i < n; i++) { const o = st[i]; if (o.s <= 0) continue; const sl = slots[i]; ctx.beginPath(); ctx.moveTo(AX, 140); ctx.arc(AX, 140, sl.r * o.s, sl.a0, sl.a0 + sl.da); ctx.closePath(); ctx.fillStyle = PAL[i % 8]; ctx.fill(); ctx.strokeStyle = 'rgba(8,14,28,.75)'; ctx.lineWidth = 1.2; ctx.stroke(); }
     }
 
+    ctx.restore();
     // tentacles (original, head-less jellyfish): idle ones hang and wave, grabbing ones reach the numbers
     const best = new Array(NT).fill(null);
     st.forEach((o, i) => { if (o.g > 0.01) { const j = (i * 2 + (i > 6 ? 1 : 0)) % NT; if (!best[j] || o.g > best[j].g) best[j] = o; } });
