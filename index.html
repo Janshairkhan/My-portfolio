@@ -275,6 +275,7 @@ section { padding-block: 56px 8px; scroll-margin-top: 72px; }
 .ccard .go { margin-top: auto; font-weight: 600; font-size: 14px; color: var(--accent); }
 .casepage { position: fixed; inset: 0; z-index: 55; background: var(--bg); overflow-y: auto; }
 .case-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 12px; padding: 12px clamp(14px, 4vw, 40px); background: var(--bg); border-bottom: 1px solid var(--line); }
+.case-bar .btn { white-space: nowrap; flex: none; }
 .case-bar .crumb { color: var(--muted); font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .case-wrap { width: min(1000px, 100%); margin: 0 auto; padding: clamp(20px, 4vw, 44px) clamp(14px, 4vw, 40px) 72px; display: flex; flex-direction: column; gap: 32px; }
 .case-hero h1 { font-size: clamp(28px, 5vw, 46px); letter-spacing: -0.02em; margin: 10px 0 8px; }
@@ -283,6 +284,11 @@ section { padding-block: 56px 8px; scroll-margin-top: 72px; }
 .case-sec h2 { font-size: clamp(20px, 2.6vw, 26px); margin-bottom: 12px; }
 .case-sec > p { max-width: 75ch; }
 .case-list { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; }
+.case-tablewrap { overflow-x: auto; margin-top: 14px; border: 1px solid var(--line); border-radius: 8px; }
+.case-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+.case-table th, .case-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--line); }
+.case-table th { background: var(--surface); font-size: 13px; color: var(--muted); }
+.case-table tr:last-child td { border-bottom: 0; }
 .case-video { max-width: 860px; }
 .case-video video { width: 100%; border: 1px solid var(--line); border-radius: 8px; display: block; background: #000; aspect-ratio: 16 / 9; }
 .case-video figure { margin: 0; }
@@ -748,6 +754,57 @@ const portfolioData = {
       assumptions: 'This case study uses only public information from codebricks.co, so no percentage gains are promised. I would verify every point with the CodeBricks team and set targets after a baseline.',
       sources: ['codebricks.co (public pages)', 'Public pages of Arbisoft, 10Pearls and Folio3 (self-reported client lists)'],
       disclaimer: 'Independent portfolio concept prepared from public information on codebricks.co and competitor websites. It uses no internal data, and it is not affiliated with or endorsed by CodeBricks Global.'
+    },
+    {
+      id: 'mcb-bank', company: 'MCB Bank', sector: 'Banking', sample: true,
+      title: 'Turning 2.2 million registered users into active ones',
+      summary: 'MCB Live is growing fast while profit slipped slightly, so each rupee of digital growth needs to be measured. Seven gaps on the loan journey and five analytics projects.',
+      problem: 'MCB Bank is growing its digital side fast (MCB Live registered users up 33% in a year) while profit slipped slightly, so every rupee of digital growth now needs to be measured. The bigger analytics question is not on the page at all: 2.2 million people are registered on MCB Live, but public sources do not say how many use it every month. Figures come from the cited pages and the bank\'s own homepage; no internal data was seen.',
+      snapshot: [
+        { k: 'Business', v: 'Retail, loans, deposits (local and foreign currency) and digital banking. Homepage headline: "Your Bank Is Now Live On Your Palm!"' },
+        { k: 'Digital users', v: 'MCB Live registered users 2.2 million, up 33% year on year (Mettis).' },
+        { k: 'Digital volume', v: 'Throughput Rs 2.72 trillion, up 115% year on year (same source).' },
+        { k: 'Profit, first half of 2026', v: 'Consolidated net profit Rs 28.10 bn, down 4% from Rs 29.39 bn.' },
+        { k: 'Deposits', v: 'Up Rs 342 bn in the half, with a target of Rs 200-250 bn more in the second half.' },
+        { k: 'Branches', v: '13 added in the first half, 40 planned for 2026.' },
+        { k: 'Homepage tools', v: 'App promotion, a loan calculator for house, car and travel loans, and a deals section.' }
+      ],
+      pains: [
+        { h: 'Raw template text', seen: 'The tenure field shows "{tenure}{tenure:current}{/tenure}" instead of a value.', impact: 'A loan customer sees broken code at the trust moment.', fix: 'Fix the template and test the calculator on every device.' },
+        { h: 'Same installment everywhere', seen: 'Every calculator shows a PKR 180k installment, and one reads "PKR 25000 K".', impact: 'Looks like placeholder numbers, so users doubt the rates.', fix: 'Show real installments by amount and tenure, and state the unit.' },
+        { h: 'No visible next step', seen: 'The page explains loans but not eligibility or documents, and account opening is not shown.', impact: 'Users who are unsure leave instead of applying.', fix: 'Add a short eligibility checklist and a clear Apply flow.' },
+        { h: 'Empty sections', seen: '"Latest News" and the quick-shortcuts block show headings with nothing under them.', impact: 'Visitors see an unfinished page.', fix: 'Fill or hide empty blocks.' },
+        { h: 'Repeated blocks', seen: 'The app banner and the loan calculator appear twice.', impact: 'Wastes space and slows the page.', fix: 'Remove the duplicates.' },
+        { h: 'Weak accessibility', seen: 'Many images are labelled only "image".', impact: 'Screen-reader users cannot use the page, and search engines learn little.', fix: 'Write real alt text.' },
+        { h: 'Contact and trust signals missing', seen: 'No phone, branch count or customer figures are visible on the page.', impact: 'A first-time visitor cannot see the bank\'s size or how to reach a person.', fix: 'Add a helpline, a branch locator and key figures.' }
+      ],
+      painsNote: 'The homepage was read as text, so each point must be confirmed in a browser before acting on it. Some gaps may already be known or fixed.',
+      competitors: [
+        { n: 'Meezan', where: 'Digital banking leader in the last public comparison', strength: 'Highest throughput (Rs 5.36 tn) and 122.9 m transactions.', meaning: 'Wins on how often customers transact.' },
+        { n: 'HBL', where: 'Large retail bank', strength: 'Most app downloads (805k).', meaning: 'Wins on app reach.' },
+        { n: 'UBL', where: 'Large retail bank', strength: 'Rs 2.1 tn throughput and 88 m transactions.', meaning: 'Wins on tech spend efficiency.' },
+        { n: 'Alfalah', where: 'Retail bank', strength: 'Rs 1.0 tn throughput and 29 m transactions.', meaning: 'Smaller digital base in this comparison.' }
+      ],
+      compTable: { head: ['Bank', 'Digital throughput (Rs tn)', 'Transactions (m)', 'App downloads (k)', 'Website visits (m)'], rows: [['Meezan', '5.36', '122.9', '490', '7.3'], ['UBL', '2.1', '88', '395', '3.2'], ['HBL', '2.0', 'not stated', '805', '3.6'], ['Alfalah', '1.0', '29', '256', '3.1'], ['MCB (2026, other basis)', '2.72', 'not stated', '2.2 m registered users', 'not stated']], note: 'First half of 2023 (Dawn, Nov 2023). That article did not include MCB, and MCB\'s own 2026 numbers cover a different period, so they are not directly comparable.' },
+      defend: 'MCB\'s real competition is for active digital users, not branches. Its opening is turning 2.2 million registered users into regular users, which only an analyst with the bank\'s own data can measure. The competitor data is three years old, so it should be refreshed with current figures before it is presented.',
+      video: { src: 'mcb-data-story.mp4', srcWebm: 'mcb-data-story.webm', poster: 'mcb-data-story-poster.jpg', caption: 'MCB Bank: A Data Story. A 77-second walkthrough of the numbers, the loan-page gaps and the five projects. The loan page is a wireframe rebuilt from the page text, not a screenshot.' },
+      solution: 'Five projects, in order. Each turns one gap above into a number the bank can track. Success is measured as active-user rate, loan application completion and cost per digital transaction; the baseline is agreed first, with no promised target.',
+      projects: [
+        { n: '1. Registered-to-active user analysis', problem: 'Nobody can say how many of the 2.2 million registered users are active.', approach: 'Split MCB Live users into monthly active, dormant and never-activated, and find what makes a user stay.', kpi: 'Active-user rate' },
+        { n: '2. Loan journey funnel', problem: 'The homepage loan journey has the most visible gaps.', approach: 'Measure calculator use, Apply clicks, document upload and approval, then fix the top two drop-off causes first.', kpi: 'Loan application completion' },
+        { n: '3. Branch vs digital mix', problem: '40 branches are planned for 2026 while digital volume grows fast.', approach: 'Compare transactions per branch with digital volume to decide where branches add value and where an app feature would do.', kpi: 'Cost per digital transaction' },
+        { n: '4. Customer segmentation and next-best product', problem: 'The same offer goes to every customer.', approach: 'Group customers by deposits, loans and app usage, and recommend the next product (loan, savings or card) for each group.', kpi: 'Product uptake per segment' },
+        { n: '5. Executive dashboard', problem: 'Different teams see different numbers.', approach: 'One monthly view of active users, loan conversion, deposits and complaints.', kpi: 'One shared set of KPIs' }
+      ],
+      flow: ['App, loan and branch data', 'Agreed definitions (what is an active user)', 'Funnel and retention analysis', 'Segments and next-best product', 'Monthly executive dashboard'],
+      roadmap: [
+        { h: 'Days 1-30: baseline', t: 'Learn the data sources, agree definitions (what counts as an active user), build the first clean dataset and list the 5 KPIs leadership cares about.' },
+        { h: 'Days 31-60: insight', t: 'Deliver the active-user and loan-funnel analyses with the top three drop-off causes and quick fixes, such as the broken calculator fields.' },
+        { h: 'Days 61-90: action', t: 'Launch the monthly dashboard, run one pilot (a nudge to dormant users or a shorter loan form) and compare it with the day-30 baseline.' }
+      ],
+      assumptions: 'This uses public information only. A bank holds data that cannot be seen from outside, so some gaps may already be known or fixed, and the homepage was read as text, so layout issues need a browser check. Competitor figures are from 2023 and MCB\'s 2026 figures cover a different basis.',
+      sources: ['mcb.com.pk (homepage)', 'Mettis Global: MCB results and digital figures', 'Dawn (Nov 2023): How digital are existing banks'],
+      disclaimer: 'Independent portfolio concept prepared on 5 November 2026 from public information only. It uses no internal data, and it is not affiliated with or endorsed by MCB Bank.'
     }
   ],
   skillCategories: ['BI & Visualization', 'Databases & Querying', 'Automation & Apps', 'Scripting & Analytics'],
@@ -1579,7 +1636,7 @@ function caseHTML(c) {
       ${sec('Watch the data story', video ? `<div class="case-video">${video}</div>` : '')}
       ${sec('The situation', `<p>${esc(c.problem)}</p>${c.snapshot ? `<div class="case-two" style="margin-top:14px">${list(c.snapshot, (p) => `<div class="case-item"><h4>${esc(p.k)}</h4><p>${esc(p.v)}</p></div>`)}</div>` : ''}`)}
       ${sec('Where it hurts', c.pains ? `<div class="case-two">${list(c.pains, (p, i) => `<div class="case-item"><h4>${i + 1}. ${esc(p.h)}</h4>${p.seen ? `<p><b>Observed:</b> ${esc(p.seen)}</p><p><b>Likely impact:</b> ${esc(p.impact)}</p><p><b>Fix:</b> ${esc(p.fix)}</p>` : `<p>${esc(p.t)}</p>`}</div>`)}</div>${c.painsNote ? `<p class="caption">${esc(c.painsNote)}</p>` : ''}` : '')}
-      ${sec('Competitor landscape', c.competitors ? `<div class="case-two">${list(c.competitors, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Competes in:</b> ${esc(p.where)}</p><p><b>Strengths:</b> ${esc(p.strength)}</p><p><b>For this business:</b> ${esc(p.meaning)}</p></div>`)}</div>${c.defend ? `<p style="margin-top:14px">${esc(c.defend)}</p>` : ''}` : '')}
+      ${sec('Competitor landscape', c.competitors ? `<div class="case-two">${list(c.competitors, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Competes in:</b> ${esc(p.where)}</p><p><b>Strengths:</b> ${esc(p.strength)}</p><p><b>For this business:</b> ${esc(p.meaning)}</p></div>`)}</div>${c.compTable ? `<div class="case-tablewrap"><table class="case-table"><thead><tr>${c.compTable.head.map((h) => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.compTable.rows.map((r) => `<tr>${r.map((x) => `<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.compTable.note ? `<p class="caption">${esc(c.compTable.note)}</p>` : ''}` : ''}${c.defend ? `<p style="margin-top:14px">${esc(c.defend)}</p>` : ''}` : '')}
       ${sec('The solution', `<p>${esc(c.solution)}</p>${c.flow ? `<div class="flow" style="margin-top:14px">${c.flow.map((n) => `<span class="node">${esc(n)}</span>`).join('<span class="arrow">→</span>')}</div>` : ''}${c.projects ? `<div class="case-two" style="margin-top:14px">${list(c.projects, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Problem:</b> ${esc(p.problem)}</p><p><b>Approach:</b> ${esc(p.approach)}</p><p><b>KPI:</b> ${esc(p.kpi)}</p></div>`)}</div>` : ''}`)}
       ${sec('Visuals', shots ? `<div class="case-shots">${shots}</div>` : '')}
       ${sec('First 90 days', c.roadmap ? `<div class="case-two">${list(c.roadmap, (p) => `<div class="case-item"><h4>${esc(p.h)}</h4><p>${esc(p.t)}</p></div>`)}</div>` : '')}
