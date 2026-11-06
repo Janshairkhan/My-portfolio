@@ -370,7 +370,7 @@ pre.code { margin: 0; padding: 14px 16px; overflow-x: auto; color: var(--code-in
 .video i { width: 54px; height: 54px; border-radius: 50%; background: var(--signal); display: grid; place-items: center; }
 .video i::after { content: ''; border-left: 16px solid var(--code-bg); border-top: 10px solid transparent; border-bottom: 10px solid transparent; margin-left: 4px; }
 
-#videoRows { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-bottom: 20px; align-items: stretch; }
+#videoRows { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 20px; align-items: stretch; }
 .video-row { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .vid { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: contain; background: #000; border: 1px solid var(--line); border-radius: 10px; }
 .video-row .panel { flex: 1; }
@@ -1325,6 +1325,12 @@ WHERE  s.on_hand_qty > 0;`
         src: 'baitussalam-training.mp4', srcWebm: 'baitussalam-training.webm', poster: 'baitussalam-training-poster.jpg',
         note: 'A short clip from a classroom session at Baitussalam Tech Park, where I was the trainer. It was filmed from the back of the room. Learners work on their laptops while the lesson runs on the screen at the front.',
         points: ['Instructor-led classroom training', 'Learners following along on their own laptops', 'Related certificate: Advanced Excel / Power BI (Trainer)']
+      },
+      {
+        title: 'AI vs experience: same job, two habits', length: '1:30',
+        src: 'ai-vs-experience.mp4', srcWebm: 'ai-vs-experience.webm', poster: 'ai-vs-experience-poster.jpg',
+        note: 'A short stick-figure animation that compares two analysts with the same job and the same boss. One depends fully on AI. The other understands the business case first and uses AI as a helper.',
+        points: ['Dumping all the data into AI vs understanding the case with the stakeholder first', 'A variance question (last year vs this year) answered live with a formula', 'Hitting the AI limit vs a light AI nudge and finishing the work yourself']
       }
     ],
     caseStudies: [
