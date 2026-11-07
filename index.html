@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jansher Khan | Business Analyst &amp; BI / Power Platform Specialist</title>
 <meta name="description" content="Portfolio of Jansher Khan: Power BI dashboards, Power Apps, automation and data analysis.">
+<meta name="theme-color" content="#0a1120">
+<link rel="canonical" href="https://janshairkhan.github.io/My-portfolio/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231c5bd0'/%3E%3Ctext x='32' y='43' font-family='Arial' font-size='30' font-weight='700' fill='white' text-anchor='middle'%3EJK%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jansher Khan | Business Analyst and BI Specialist">
+<meta property="og:description" content="Power BI dashboards, Power Apps, automation and data analysis, with business case studies.">
+<meta property="og:url" content="https://janshairkhan.github.io/My-portfolio/">
+<meta property="og:image" content="https://janshairkhan.github.io/My-portfolio/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <meta charset="utf-8">
@@ -15,6 +24,7 @@
 /* Layout: a report canvas. Sticky "page tab" nav, a hero that pairs the pitch with a to-scale chart,
    then one section per report page: Work, Skills, Code, Credentials, Media, Contact. */
 :root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --bg: #f2f5fa;
   --surface: #ffffff;
   --surface-2: #e8eef7;
@@ -267,6 +277,37 @@ section { padding-block: 56px 8px; scroll-margin-top: 72px; }
 .thumbs button[aria-current="true"] { border-color: var(--accent); }
 .caption { font-size: 13px; color: var(--muted); margin-top: 8px; }
 
+/* upgrade: tagline reveal, process, FAQ, scroll reveals, states */
+.skip { position: fixed; top: 8px; left: 8px; z-index: 100; background: var(--accent); color: var(--accent-ink); padding: 8px 12px; border-radius: 6px; font-weight: 600; font-size: 14px; text-decoration: none; transform: translateY(-64px); transition: transform 300ms var(--ease); }
+.skip:focus { transform: none; }
+.tagline { padding: 96px 0 64px; }
+.tagline-text { margin: 0; max-width: 680px; font-family: var(--font-display); font-weight: 700; font-size: 36px; line-height: 40px; text-wrap: balance; color: var(--ink); }
+.tw { opacity: 0.3; transition: opacity 500ms var(--ease); }
+.tw.on { opacity: 1; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.step .n { font-family: var(--font-mono); font-size: 12px; line-height: 16px; letter-spacing: 0.12em; color: var(--accent); }
+.step h3 { font-size: 20px; line-height: 28px; }
+.step p { margin: 0; font-size: 16px; line-height: 24px; color: var(--muted); text-wrap: pretty; }
+.faq { display: grid; gap: 8px; max-width: 860px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.faq details[open] { border-color: var(--accent); }
+.faq summary { list-style: none; cursor: pointer; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; font-weight: 600; font-size: 18px; line-height: 28px; border-radius: 10px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; flex: none; width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform 300ms var(--ease); }
+.faq details[open] summary::after { transform: rotate(-135deg); }
+.faq .ans { padding: 0 24px 16px; margin: 0; font-size: 16px; line-height: 24px; color: var(--muted); text-wrap: pretty; max-width: 680px; }
+.cta-call { margin-top: 24px; }
+footer a { color: inherit; }
+.btn, .chip, .ccard, .pcard, .cert, .icon-btn { transition-timing-function: var(--ease); }
+.btn:active, .chip:active, .icon-btn:active { transform: scale(0.98); }
+.ccard:active, .pcard:active, .cert:active { transform: translateY(1px); }
+.rv-on .rv { opacity: 0; transform: translateY(32px); transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
+.rv-on .rv.in { opacity: 1; transform: none; }
+@media (max-width: 880px) { .steps { grid-template-columns: minmax(0, 1fr); } .tagline { padding: 64px 0 48px; } }
+@media (max-width: 600px) { .tagline-text { font-size: 30px; line-height: 36px; } .faq summary { padding: 12px 16px; font-size: 16px; line-height: 24px; } .faq .ans { padding: 0 16px 12px; } }
+@media (prefers-reduced-motion: reduce) { .rv-on .rv { transform: none; transition: opacity 400ms var(--ease); } .tw { opacity: 1; transition: none; } .btn:active, .chip:active { transform: none; } }
+
 /* business solutions */
 .ccard { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; min-width: 0; transition: border-color .15s, transform .25s ease; }
 .ccard:hover, .ccard:focus-visible { border-color: var(--accent); transform: translateY(-3px); }
@@ -445,6 +486,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
 }
 </style>
 
+<a class="skip" href="#top">Skip to content</a>
 <div class="hero-bg" id="heroBg" aria-hidden="true">
   <video id="bgVideo" muted loop playsinline preload="auto" autoplay poster="site-background-poster.jpg" tabindex="-1">
     <source src="site-background.mp4" type="video/mp4">
@@ -487,6 +529,10 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
     </div>
   </div>
 
+  <section class="tagline" id="tagline" aria-label="What I do">
+    <p class="tagline-text" id="taglineText">I turn scattered spreadsheets into one trusted view, so your team decides on numbers instead of guesses.</p>
+  </section>
+
   <section id="work">
     <div class="sec-head">
       <div class="eyebrow">Featured dashboards and projects</div>
@@ -504,6 +550,19 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
     </div>
     <div class="chips" id="skillFilters" role="group" aria-label="Filter skills by category"></div>
     <div class="grid" id="skillGrid"></div>
+  </section>
+
+  <section id="process">
+    <div class="sec-head">
+      <div class="eyebrow">How I work</div>
+      <h2>From a vague question to a report people use</h2>
+      <p>Three steps, in this order, on every project.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="n">STEP 1</span><h3>Understand the decision</h3><p>I start with the decision the report has to support, who uses it and what they do today. I write that down before I open Power BI.</p></div>
+      <div class="step"><span class="n">STEP 2</span><h3>Build one shared model</h3><p>I clean the data with SQL or Excel, build one model in Power BI, and automate the refresh with Power Automate so nobody rebuilds a pack by hand.</p></div>
+      <div class="step"><span class="n">STEP 3</span><h3>Hand over and check</h3><p>I walk the team through the dashboard, check the totals with the people who rely on them, and agree what to improve next.</p></div>
+    </div>
   </section>
 
   <section id="code">
@@ -555,11 +614,27 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
     <div class="grid wide" id="caseGrid"></div>
   </section>
 
+  <section id="faq">
+    <div class="sec-head">
+      <div class="eyebrow">FAQ</div>
+      <h2>Questions people ask before we talk</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Which tools do you use?</summary><p class="ans">Power BI and DAX, SQL, advanced Excel, Power Apps, Power Automate and Python. The Skills section shows each one with examples of how I use it.</p></details>
+      <details><summary>What happens in a first conversation?</summary><p class="ans">A 30 minute call about the report or process that is not working. You describe the problem, I ask about the data and the people who use it, and we agree whether it is worth building.</p></details>
+      <details><summary>What are the Business Solutions case studies?</summary><p class="ans">Independent concepts about real companies, each with a written plan and a short video. They use public information only and show how I would approach the problem. They are not work done for those companies.</p></details>
+      <details><summary>Do you show real company data on this site?</summary><p class="ans">No. The examples here use public information or sample data. For real work I would agree access and confidentiality before I see any data.</p></details>
+      <details><summary>How do you keep the numbers trustworthy?</summary><p class="ans">One shared model, definitions written down in plain words, and a check of the totals against the source before handover.</p></details>
+      <details><summary>Where are you based, and how do I reach you?</summary><p class="ans">I am in Karachi, Pakistan (UTC+5). Use the phone, email or LinkedIn links in the Contact section, or download my CV from the top of the page.</p></details>
+    </div>
+  </section>
+
   <section id="contact">
     <div class="sec-head">
       <div class="eyebrow">Contact</div>
       <h2>Hire me, or just say hello</h2>
-      <p>Tell me about the report nobody trusts or the process that still runs on email. Reach me by phone, email or LinkedIn.</p>
+      <p>Tell me about the report nobody trusts or the process that still runs on email. The first step is a 30 minute conversation.</p>
+      <div class="cta-call"><a class="btn primary" id="ctaCall" href="#contact">Book a 30 minute call</a></div>
     </div>
     <div class="contact-grid">
       <div class="tool-flow" aria-label="Tools I use: Power BI, Power Automate, Power Apps, SQL and Excel">
@@ -585,7 +660,7 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
   </section>
 
   <footer>
-    <span>Built as a single-page sample. Move the data into <span class="mono">portfolioData.js</span> in your Next.js project.</span>
+    <span>Business Analyst and BI specialist, Karachi. <a href="#top">Back to top</a></span>
     <span class="mono">Jansher Khan</span>
   </footer>
 </main>
@@ -2112,6 +2187,42 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
   if ('IntersectionObserver' in window) new IntersectionObserver((es) => { vis = es[0].isIntersecting; if (vis) kick(); }, { threshold: 0 }).observe(cv);
   document.addEventListener('visibilitychange', () => { last = 0; kick(); });
   render(0); kick();
+})();
+</script>
+<script>
+/* Upgrade: contact CTA, tagline word reveal, scroll reveals */
+(function () {
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  try {
+    const call = document.getElementById('ctaCall'), mail = document.getElementById('mailText');
+    if (call && mail && mail.textContent.trim()) call.href = 'mailto:' + mail.textContent.trim() + '?subject=' + encodeURIComponent('30 minute call');
+  } catch (e) {}
+  const tt = document.getElementById('taglineText');
+  if (tt) {
+    const text = tt.textContent.trim();
+    tt.setAttribute('aria-label', text);
+    tt.innerHTML = text.split(/\s+/).map((w) => '<span class="tw" aria-hidden="true">' + w + '</span>').join(' ');
+    const words = tt.querySelectorAll('.tw');
+    if (reduce || !('IntersectionObserver' in window)) words.forEach((w) => w.classList.add('on'));
+    else {
+      let k = 0;
+      const wio = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting || en.boundingClientRect.top < 0) { en.target.style.transitionDelay = (k++ % 6) * 40 + 'ms'; en.target.classList.add('on'); wio.unobserve(en.target); }
+        });
+        setTimeout(() => { k = 0; }, 300);
+      }, { rootMargin: '0px 0px -30% 0px', threshold: 0 });
+      words.forEach((w) => wio.observe(w));
+    }
+  }
+  if ('IntersectionObserver' in window) {
+    const els = document.querySelectorAll('main > section:not(.tagline) > *');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting || en.boundingClientRect.top < 0) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.04 });
+    els.forEach((el) => { el.classList.add('rv'); io.observe(el); });
+    document.documentElement.classList.add('rv-on');
+  }
 })();
 </script>
 
