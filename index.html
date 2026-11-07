@@ -285,7 +285,10 @@ section { padding-block: 56px 8px; scroll-margin-top: 72px; }
 .tw { opacity: 0.3; transition: opacity 500ms var(--ease); }
 .tw.on { opacity: 1; }
 .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.step { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.step { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.flow { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--line); overflow: hidden; }
+.flow::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 40%; background: var(--accent); border-radius: 3px; transform: translateX(-100%); animation: flowmove 3.6s var(--ease) infinite; animation-delay: calc(var(--i) * 1.2s); }
+@keyframes flowmove { 0% { transform: translateX(-100%); } 33% { transform: translateX(260%); } 100% { transform: translateX(260%); } }
 .step .n { font-family: var(--font-mono); font-size: 12px; line-height: 16px; letter-spacing: 0.12em; color: var(--accent); }
 .step h3 { font-size: 20px; line-height: 28px; }
 .step p { margin: 0; font-size: 16px; line-height: 24px; color: var(--muted); text-wrap: pretty; }
@@ -306,7 +309,7 @@ footer a { color: inherit; }
 .rv-on .rv.in { opacity: 1; transform: none; }
 @media (max-width: 880px) { .steps { grid-template-columns: minmax(0, 1fr); } .tagline { padding: 64px 0 48px; } }
 @media (max-width: 600px) { .tagline-text { font-size: 30px; line-height: 36px; } .faq summary { padding: 12px 16px; font-size: 16px; line-height: 24px; } .faq .ans { padding: 0 16px 12px; } }
-@media (prefers-reduced-motion: reduce) { .rv-on .rv { transform: none; transition: opacity 400ms var(--ease); } .tw { opacity: 1; transition: none; } .btn:active, .chip:active { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .rv-on .rv { transform: translateY(12px); transition: opacity 800ms var(--ease), transform 800ms var(--ease); } .flow::after { animation-duration: 7.2s; } .btn:active, .chip:active { transform: none; } }
 
 /* business solutions */
 .ccard { text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: flex; flex-direction: column; gap: 10px; cursor: pointer; min-width: 0; transition: border-color .15s, transform .25s ease; }
@@ -559,9 +562,9 @@ footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line);
       <p>Three steps, in this order, on every project.</p>
     </div>
     <div class="steps">
-      <div class="step"><span class="n">STEP 1</span><h3>Understand the decision</h3><p>I start with the decision the report has to support, who uses it and what they do today. I write that down before I open Power BI.</p></div>
-      <div class="step"><span class="n">STEP 2</span><h3>Build one shared model</h3><p>I clean the data with SQL or Excel, build one model in Power BI, and automate the refresh with Power Automate so nobody rebuilds a pack by hand.</p></div>
-      <div class="step"><span class="n">STEP 3</span><h3>Hand over and check</h3><p>I walk the team through the dashboard, check the totals with the people who rely on them, and agree what to improve next.</p></div>
+      <div class="step"><i class="flow" style="--i:0" aria-hidden="true"></i><span class="n">STEP 1</span><h3>Understand the decision</h3><p>I start with the decision the report has to support, who uses it and what they do today. I write that down before I open Power BI.</p></div>
+      <div class="step"><i class="flow" style="--i:1" aria-hidden="true"></i><span class="n">STEP 2</span><h3>Build one shared model</h3><p>I clean the data with SQL or Excel, build one model in Power BI, and automate the refresh with Power Automate so nobody rebuilds a pack by hand.</p></div>
+      <div class="step"><i class="flow" style="--i:2" aria-hidden="true"></i><span class="n">STEP 3</span><h3>Hand over and check</h3><p>I walk the team through the dashboard, check the totals with the people who rely on them, and agree what to improve next.</p></div>
     </div>
   </section>
 
@@ -2203,7 +2206,7 @@ renderSkills(); renderProjects(); renderCode(); renderCerts(); renderSlide(); re
     tt.setAttribute('aria-label', text);
     tt.innerHTML = text.split(/\s+/).map((w) => '<span class="tw" aria-hidden="true">' + w + '</span>').join(' ');
     const words = tt.querySelectorAll('.tw');
-    if (reduce || !('IntersectionObserver' in window)) words.forEach((w) => w.classList.add('on'));
+    if (!('IntersectionObserver' in window)) words.forEach((w) => w.classList.add('on'));
     else {
       let k = 0;
       const wio = new IntersectionObserver((entries) => {
