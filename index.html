@@ -883,6 +883,48 @@ const portfolioData = {
       assumptions: 'This uses public information only. A bank holds data that cannot be seen from outside, so some gaps may already be known or fixed, and the homepage was read as text, so layout issues need a browser check. Competitor figures are from 2023 and MCB\'s 2026 figures cover a different basis.',
       sources: ['mcb.com.pk (homepage)', 'Mettis Global: MCB results and digital figures', 'Dawn (Nov 2023): How digital are existing banks'],
       disclaimer: 'Independent portfolio concept prepared on 5 November 2026 from public information only. It uses no internal data, and it is not affiliated with or endorsed by MCB Bank.'
+    },
+    {
+      id: 'ideas-pvt-limited', company: 'Ideas (Pvt.) Limited', sector: 'Fashion retail', sample: true,
+      title: 'Turning daily sales data into store decisions',
+      summary: 'The retail arm of Gul Ahmed claims 100+ stores, and its careers page shows eight visible gaps. Five analytics projects to turn daily sales into decisions.',
+      problem: 'Ideas (Pvt.) Limited is the retail arm of Gul Ahmed Textile Mills. Its careers page claims 100+ stores across men\'s, women\'s and kids\' wear, unstitched fabric, home, footwear, bags and fragrances. A business analyst here sits between stores, e-commerce, supply chain and finance, so the job is to turn daily sales data into decisions.',
+      snapshot: [
+        { k: 'Owner', v: 'Fully owned subsidiary of Gul Ahmed Textile Mills.' },
+        { k: 'Scale', v: '"100+ stores". A 30,000 sq ft flagship at Dolmen Mall Clifton opened on 16 January 2025 (The News).' },
+        { k: 'Departments', v: 'Sales and Marketing, Design, Product, Supply Chain, E-Commerce, Finance and Business Planning, Support.' },
+        { k: 'Hiring steps', v: 'Applicant pool, phone screen, first interview, second interview (managerial roles), documents, offer, appointment.' }
+      ],
+      pains: [
+        { h: 'No open roles shown', seen: 'The careers page lists no open roles or job categories.', impact: 'Candidates cannot see if a role exists.', fix: 'A live roles feed plus a weekly count.' },
+        { h: 'No timelines for the hiring steps', seen: 'The 7 step hiring process has no timelines.', impact: 'Good candidates drop off while waiting.', fix: 'Track days per stage and set a target.' },
+        { h: 'Dead social links', seen: 'The social icons in the footer link to "#".', impact: 'Dead links hurt trust and reach.', fix: 'A link audit, fixed in one day.' },
+        { h: 'Repeated and mismatched calls to action', seen: '"Sign in" and "Create profile" are repeated, and "Refer someone" appears next to "Refer a candidate".', impact: 'A confusing journey and split data.', fix: 'One clear funnel with one tracking name.' },
+        { h: 'Typos', seen: '"Managment", and "GulAhmed" next to "Gul Ahmed".', impact: 'Looks careless for a 100+ store brand.', fix: 'A content checklist before publishing.' },
+        { h: 'Weak meta description', seen: 'The meta description is only "About Us" and the keywords are empty.', impact: 'Poor Google visibility for job searches.', fix: 'SEO titles and descriptions per page.' },
+        { h: 'A claim with no context', seen: '"190+ countries e-commerce network" has no context.', impact: 'The claim cannot be checked.', fix: 'Show real numbers or soften the claim.' },
+        { h: 'No contact email or benefits', seen: 'No email contact, salary or benefits information.', impact: 'Fewer applications from top talent.', fix: 'Add an HR email and a benefits section.' }
+      ],
+      painsNote: 'The careers page was checked on 24 November 2026. These are hypotheses from public pages only, and Ideas\' internal data may explain some of them. Each gap is small, but together they say that no one measures this page.',
+      compTable: { head: ['Competitor', 'Where it is strong (public view)', 'What Ideas should benchmark'], rows: [['Khaadi', 'Strong brand, own stores and online.', 'Price vs quality, online share.'], ['Sapphire', 'Fast store expansion in about a decade (ProPakistani headline).', 'Store opening speed and payback.'], ['Alkaram Studio, J. (Junaid Jamshed), Nishat Linen', 'Seasonal lawn launches, loyal repeat buyers.', 'Launch calendar, discount depth.']], note: 'No competitor numbers are quoted because a reliable source could not be opened. Collecting them is the first analyst task.' },
+      defend: 'Ideas competes with textile led fashion chains that also run stores plus online. The benchmark that matters most is simple: sales per store, online share of sales, and discount days per year.',
+      video: { src: 'ideas-case.mp4', srcWebm: 'ideas-case.webm', poster: 'ideas-case-poster.jpg', caption: 'Ideas (Pvt.) Limited: a business analyst case study. A 51 second walkthrough of the 100+ stores, the 8 visible gaps and how an analyst would help.' },
+      solution: 'Five projects, in order: one sales view of the stores first, then forecasting, markdown analysis and the online funnel, and finally the hiring funnel behind the gaps above.',
+      projects: [
+        { n: '1. Sales dashboard by store and category', t: 'One view of daily sales, stock and returns, so managers see weak stores in hours, not weeks.' },
+        { n: '2. Demand forecast for seasonal launches', t: 'Predict size and colour demand per store, to cut stock-outs and end of season sale loss.' },
+        { n: '3. Discount and markdown analysis', t: 'Find which sale days really add profit and which only give margin away.' },
+        { n: '4. E-commerce funnel review', t: 'Visits, cart, payment, delivery: find where online buyers drop.' },
+        { n: '5. Hiring funnel tracker', t: 'Days per stage and drop off on the careers page, covering the gaps from the table above.' }
+      ],
+      roadmap: [
+        { h: 'Days 1-30', t: 'Learn stores, products and data sources, and clean the sales and stock data. Result: one trusted sales dataset.' },
+        { h: 'Days 31-60', t: 'Build the store and category dashboard, and fix the careers page gaps. Result: the weekly report is live.' },
+        { h: 'Days 61-90', t: 'Run the first seasonal forecast and the discount review. Result: a plan for the next launch.' }
+      ],
+      assumptions: 'Everything here is a hypothesis from public pages checked on 24 November 2026, so Ideas\' internal data may show a different picture. Competitor figures are not quoted because they could not be verified.',
+      sources: ['Ideas (Pvt.) Limited careers page', 'The News, on the Dolmen Mall Clifton flagship', 'The Express Tribune'],
+      disclaimer: 'Independent portfolio concept prepared on 24 November 2026 from public information only. It uses no internal data, and it is not affiliated with or endorsed by Ideas (Pvt.) Limited or Gul Ahmed.'
     }
   ],
   skillCategories: ['BI & Visualization', 'Databases & Querying', 'Automation & Apps', 'Scripting & Analytics'],
@@ -1720,8 +1762,8 @@ function caseHTML(c) {
       ${sec('Watch the data story', video ? `<div class="case-video">${video}</div>` : '')}
       ${sec('The situation', `<p>${esc(c.problem)}</p>${c.snapshot ? `<div class="case-two" style="margin-top:14px">${list(c.snapshot, (p) => `<div class="case-item"><h4>${esc(p.k)}</h4><p>${esc(p.v)}</p></div>`)}</div>` : ''}`)}
       ${sec('Where it hurts', c.pains ? `<div class="case-two">${list(c.pains, (p, i) => `<div class="case-item"><h4>${i + 1}. ${esc(p.h)}</h4>${p.seen ? `<p><b>Observed:</b> ${esc(p.seen)}</p><p><b>Likely impact:</b> ${esc(p.impact)}</p><p><b>Fix:</b> ${esc(p.fix)}</p>` : `<p>${esc(p.t)}</p>`}</div>`)}</div>${c.painsNote ? `<p class="caption">${esc(c.painsNote)}</p>` : ''}` : '')}
-      ${sec('Competitor landscape', c.competitors ? `<div class="case-two">${list(c.competitors, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Competes in:</b> ${esc(p.where)}</p><p><b>Strengths:</b> ${esc(p.strength)}</p><p><b>For this business:</b> ${esc(p.meaning)}</p></div>`)}</div>${c.compTable ? `<div class="case-tablewrap"><table class="case-table"><thead><tr>${c.compTable.head.map((h) => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.compTable.rows.map((r) => `<tr>${r.map((x) => `<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.compTable.note ? `<p class="caption">${esc(c.compTable.note)}</p>` : ''}` : ''}${c.defend ? `<p style="margin-top:14px">${esc(c.defend)}</p>` : ''}` : '')}
-      ${sec('The solution', `<p>${esc(c.solution)}</p>${c.flow ? `<div class="flow" style="margin-top:14px">${c.flow.map((n) => `<span class="node">${esc(n)}</span>`).join('<span class="arrow">→</span>')}</div>` : ''}${c.projects ? `<div class="case-two" style="margin-top:14px">${list(c.projects, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Problem:</b> ${esc(p.problem)}</p><p><b>Approach:</b> ${esc(p.approach)}</p><p><b>KPI:</b> ${esc(p.kpi)}</p></div>`)}</div>` : ''}`)}
+      ${sec('Competitor landscape', c.competitors || c.compTable ? `${c.competitors ? `<div class="case-two">${list(c.competitors, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4><p><b>Competes in:</b> ${esc(p.where)}</p><p><b>Strengths:</b> ${esc(p.strength)}</p><p><b>For this business:</b> ${esc(p.meaning)}</p></div>`)}</div>` : ''}${c.compTable ? `<div class="case-tablewrap"><table class="case-table"><thead><tr>${c.compTable.head.map((h) => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${c.compTable.rows.map((r) => `<tr>${r.map((x) => `<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${c.compTable.note ? `<p class="caption">${esc(c.compTable.note)}</p>` : ''}` : ''}${c.defend ? `<p style="margin-top:14px">${esc(c.defend)}</p>` : ''}` : '')}
+      ${sec('The solution', `<p>${esc(c.solution)}</p>${c.flow ? `<div class="flow" style="margin-top:14px">${c.flow.map((n) => `<span class="node">${esc(n)}</span>`).join('<span class="arrow">→</span>')}</div>` : ''}${c.projects ? `<div class="case-two" style="margin-top:14px">${list(c.projects, (p) => `<div class="case-item"><h4>${esc(p.n)}</h4>${p.t ? `<p>${esc(p.t)}</p>` : `<p><b>Problem:</b> ${esc(p.problem)}</p><p><b>Approach:</b> ${esc(p.approach)}</p><p><b>KPI:</b> ${esc(p.kpi)}</p>`}</div>`)}</div>` : ''}`)}
       ${sec('Visuals', shots ? `<div class="case-shots">${shots}</div>` : '')}
       ${sec('First 90 days', c.roadmap ? `<div class="case-two">${list(c.roadmap, (p) => `<div class="case-item"><h4>${esc(p.h)}</h4><p>${esc(p.t)}</p></div>`)}</div>` : '')}
       ${sec('What gets delivered', c.deliverables ? `<div class="case-two">${list(c.deliverables, (d) => `<div class="case-item"><p style="color:var(--ink)">${esc(d)}</p></div>`)}</div>` : '')}
